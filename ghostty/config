@@ -39,6 +39,8 @@ cursor-color = #e6e5e5
 selection-background = #33467c
 selection-foreground = #ffffff
 
-background-image = ~/Desktop/Files/wallpapers/wraith-1.jpg
+background-image = ~/Desktop/Files/wallpapers/sand_wraith.jpg
 background-image-opacity = 1.0
 background-image-fit = cover
+# background-opacity = 0.0
+# background-blur = macos-glass-clear
