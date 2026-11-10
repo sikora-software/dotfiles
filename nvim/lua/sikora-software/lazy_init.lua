@@ -13,13 +13,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     spec = {{
-        import = "sikora-software.plugins.git"
+        import = "sikora-software.plugins.coding"
     }, {
-        import = "sikora-software.plugins.lsp"
+        import = "sikora-software.plugins.editor"
+    }, {
+        import = "sikora-software.plugins.git"
     }, {
         import = "sikora-software.plugins.lang"
     }, {
-        import = "sikora-software.plugins.coding"
+        import = "sikora-software.plugins.lsp"
     }, {
         import = "sikora-software.lazy"
     }},
