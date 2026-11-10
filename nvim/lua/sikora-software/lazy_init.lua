@@ -23,6 +23,8 @@ require("lazy").setup({
     }, {
         import = "sikora-software.plugins.lsp"
     }, {
+        import = "sikora-software.plugins.ui"
+    }, {
         import = "sikora-software.lazy"
     }},
     change_detection = {
