@@ -1,10 +1,7 @@
 return {
-	"neovim/nvim-lspconfig",
+	"williamboman/mason.nvim",
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"saghen/blink.cmp",
 		-- "L3MON4D3/LuaSnip",
 		-- "saadparwaiz1/cmp_luasnip",
 	},
@@ -18,78 +15,8 @@ return {
 		-- 	vim.lsp.protocol.make_client_capabilities(),
 		-- 	cmp_lsp.default_capabilities()
 		-- )
-		local capabilities = require("blink.cmp").get_lsp_capabilities()
 
 		require("mason").setup()
-		require("mason-lspconfig").setup({
-			ensure_installed = {
-				"astro",
-				"angularls",
-				"lua_ls",
-				"rust_analyzer",
-				"html",
-				"vtsls",
-				"svelte",
-			},
-			-- automatic_installation = true,
-			automatic_enable = false,
-			handlers = {
-				function(server_name) -- default handler (optional)
-					vim.lsp.config[server_name].setup({
-						capabilities = capabilities,
-					})
-				end,
-
-				["lua_ls"] = function()
-					vim.lsp.config.lua_ls.setup({
-						capabilities = capabilities,
-						settings = {
-							Lua = {
-								-- runtime = { version = "Lua 5.1" },
-								diagnostics = {
-									globals = { "vim" },
-								},
-							},
-						},
-					})
-				end,
-				["vtsls"] = function()
-					vim.lsp.config.vtsls.setup({
-						capabilities = capabilities,
-						root_dir = vim.lsp.config.util.root_pattern("package.json", "tsconfig.json", ".git"),
-						settings = {
-							typescript = {
-								inlayHints = { parameterNames = "all" },
-							},
-						},
-					})
-				end,
-
-				["astro"] = function()
-					vim.lsp.config.astro.setup({
-						capabilities = capabilities,
-						-- filetypes = { "astro", "typescriptreact" },
-						filetypes = { "astro" },
-						root_dir = vim.lsp.config.util.root_pattern("package.json", "tsconfig.json", ".git"),
-					})
-				end,
-
-				["svelte"] = function()
-					vim.lsp.config.svelte.setup({
-						capabilities = capabilities,
-						filetypes = { "svelte" },
-						root_dir = vim.lsp.config.util.root_pattern("package.json", "svelte.config.js", ".git"),
-					})
-				end,
-
-				["angularls"] = function()
-					vim.lsp.config.angularls.setup({
-						capabilities = capabilities,
-						root_dir = vim.lsp.config.util.root_pattern("angular.json", "package.json", ".git"),
-					})
-				end,
-			},
-		})
 
 		-- local cmp_select = { behavior = cmp.SelectBehavior.Select }
 		--
