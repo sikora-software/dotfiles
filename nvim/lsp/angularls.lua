@@ -53,4 +53,6 @@ return {
 	end,
 	filetypes = { "typescript", "html", "typescriptreact", "htmlangular" },
 	root_markers = { "angular.json", "nx.json" },
+	-- Only start inside an Angular workspace, not for every .ts/.html file
+	workspace_required = true,
 }

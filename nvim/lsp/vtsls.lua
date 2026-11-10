@@ -7,4 +7,11 @@ return {
 		local markers = { { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }, { ".git" } }
 		on_dir(vim.fs.root(bufnr, markers) or vim.fn.getcwd())
 	end,
+	settings = {
+		typescript = {
+			inlayHints = {
+				parameterNames = { enabled = "all" }, -- "none" | "literals" | "all"
+			},
+		},
+	},
 }
