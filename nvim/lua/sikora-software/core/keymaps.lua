@@ -1,8 +1,8 @@
 vim.g.mapleader = " "
 
 local default_opts = {
-    noremap = false,
-    silent = false
+	noremap = false,
+	silent = false,
 } -- Options for keymaps
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, default_opts)
@@ -42,10 +42,10 @@ vim.keymap.set("n", "N", "Nzzzv", default_opts)
 vim.keymap.set("x", "<leader>p", [["_dP]], default_opts)
 
 -- Copy to OS clipboard
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]], default_opts)
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], default_opts)
 vim.keymap.set("n", "<leader>Y", [["+Y]], default_opts)
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]], default_opts)
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], default_opts)
 
 vim.keymap.set("i", "<C-c>", "<Esc>", default_opts)
 
@@ -59,13 +59,13 @@ vim.keymap.set("n", "<leader>vim", "<cmd>e ~/.config/nvim/lua/sikora-software<CR
 
 -- Source config (only in nvim config)
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("source %")
+	vim.cmd("source %")
 end, default_opts)
 
 vim.keymap.set("n", "<leader>rp", function()
-    print(vim.fn.expand("%"))
+	print(vim.fn.expand("%"))
 end, {
-    desc = "Show relative file path"
+	desc = "Show relative file path",
 })
 
 -- Insert new line without entering insert mode
@@ -73,7 +73,7 @@ vim.keymap.set("n", "<CR>", "m`o<Esc>``")
 vim.keymap.set("n", "<S-CR>", "m`O<Esc>``")
 
 vim.keymap.set("x", "<leader>r", '"zy:%s/\\V<C-R>z//gc<Left><Left><Left>', {
-    noremap = true,
-    silent = false,
-    desc = "Interactive replace selection"
+	noremap = true,
+	silent = false,
+	desc = "Interactive replace selection",
 })
