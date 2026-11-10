@@ -35,6 +35,6 @@ vim.opt.updatetime = 50
 -- vim.opt.colorcolumn = "80"
 
 if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
-	vim.opt.title = true
-	vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')}"
+    vim.opt.title = true
+    vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')}"
 end
