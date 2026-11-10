@@ -32,6 +32,7 @@ return {
 				"svelte",
 			},
 			-- automatic_installation = true,
+			automatic_enable = false,
 			handlers = {
 				function(server_name) -- default handler (optional)
 					vim.lsp.config[server_name].setup({
