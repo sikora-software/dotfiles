@@ -5,6 +5,7 @@ vim.lsp.enable({
 	"html",
 	"jsonls",
 	"lua_ls",
+	"roslyn_ls",
 	"rust_analyzer",
 	-- "svelte",
 	"vtsls",
