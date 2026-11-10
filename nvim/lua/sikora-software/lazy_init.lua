@@ -19,6 +19,8 @@ require("lazy").setup({
     }, {
         import = "sikora-software.plugins.lang"
     }, {
+        import = "sikora-software.plugins.coding"
+    }, {
         import = "sikora-software.lazy"
     }},
     change_detection = {
