@@ -11,10 +11,14 @@ local function refresh_diagnostics(client)
 	for bufnr in pairs(client.attached_buffers) do
 		if vim.api.nvim_buf_is_loaded(bufnr) then
 			for _, provider in ipairs(providers) do
-				client:request("textDocument/diagnostic", {
-					identifier = provider.registerOptions.identifier,
-					textDocument = vim.lsp.util.make_text_document_params(bufnr),
-				}, nil, bufnr)
+				-- Skip providers limited to other files (Roslyn's Razor one would repeat every C# error)
+				local selector = provider.registerOptions.documentSelector
+				if selector == nil or selector == vim.NIL then
+					client:request("textDocument/diagnostic", {
+						identifier = provider.registerOptions.identifier,
+						textDocument = vim.lsp.util.make_text_document_params(bufnr),
+					}, nil, bufnr)
+				end
 			end
 		end
 	end
