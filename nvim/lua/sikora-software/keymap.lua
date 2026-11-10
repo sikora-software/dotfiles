@@ -52,7 +52,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>", default_opts)
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], default_opts)
 
 -- Preview vim config
-vim.keymap.set("n", "<leader>vim", "<cmd>e ~/.config/nvim/lua/awms<CR>", default_opts)
+vim.keymap.set("n", "<leader>vim", "<cmd>e ~/.config/nvim/lua/sikora-software<CR>", default_opts)
 
 -- Source config (only in nvim config)
 vim.keymap.set("n", "<leader><leader>", function()

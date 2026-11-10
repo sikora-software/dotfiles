@@ -1,1 +1,1 @@
-require("awms")
+require("sikora-software")

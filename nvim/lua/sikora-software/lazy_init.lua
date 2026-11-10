@@ -15,6 +15,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	spec = "awms.lazy",
+	spec = "sikora-software.lazy",
 	change_detection = { notify = false },
 })
