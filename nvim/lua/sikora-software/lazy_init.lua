@@ -15,6 +15,8 @@ require("lazy").setup({
     spec = {{
         import = "sikora-software.plugins.git"
     }, {
+        import = "sikora-software.plugins.lsp"
+    }, {
         import = "sikora-software.lazy"
     }},
     change_detection = {
