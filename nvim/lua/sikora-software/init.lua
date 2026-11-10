@@ -3,6 +3,7 @@ require("sikora-software.core.keymaps")
 require("sikora-software.core.autocmds")
 require("sikora-software.core.filetypes")
 require("sikora-software.core.lsp")
+require("sikora-software.core.diagnostics")
 require("sikora-software.lazy_init")
 
 vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#00b7ff" }) -- Replace with desired color
