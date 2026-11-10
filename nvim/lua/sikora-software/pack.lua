@@ -2,7 +2,12 @@
 -- Every file in plugins/<category>/ calls vim.pack.add() and then sets its plugin up.
 -- Files load in alphabetical order, category by category, in the order listed here.
 -- Categories not listed yet are still imported by lazy.nvim in lazy_init.lua.
-local categories = {}
+local categories = { "git" }
+
+local add = vim.pack.add
+vim.pack.add = function(specs, opts)
+	return add(specs, vim.tbl_extend("keep", opts or {}, { load = true }))
+end
 
 for _, category in ipairs(categories) do
 	local files = {}
@@ -16,3 +21,5 @@ for _, category in ipairs(categories) do
 		require(("sikora-software.plugins.%s.%s"):format(category, file))
 	end
 end
+
+vim.pack.add = add

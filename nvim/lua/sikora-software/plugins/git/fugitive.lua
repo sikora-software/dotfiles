@@ -1,9 +1,1 @@
-return {
-
-	{
-		"tpope/vim-fugitive",
-		config = function()
-			local opts = { noremap = true, silent = true }
-		end,
-	},
-}
+vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
