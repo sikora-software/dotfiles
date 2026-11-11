@@ -86,7 +86,7 @@
     },
     "nvim-colorizer.lua": {
       "rev": "a065833f35a3a7cc3ef137ac88b5381da2ba302e",
-      "src": "https://github.com/norcalli/nvim-colorizer.lua"
+      "src": "https://github.com/catgoose/nvim-colorizer.lua"
     },
     "nvim-lint": {
       "rev": "52107ce2076a27a285af781248e2c59bad817cd0",
