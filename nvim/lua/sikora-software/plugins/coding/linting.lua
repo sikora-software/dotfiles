@@ -22,12 +22,19 @@ local function has_eslint_config()
 	end
 
 	local configs = {
+		-- flat config (ESLint 9+)
+		"eslint.config.js",
+		"eslint.config.mjs",
+		"eslint.config.cjs",
+		"eslint.config.ts",
+		"eslint.config.mts",
+		"eslint.config.cts",
+		-- legacy config
 		".eslintrc.js",
 		".eslintrc.cjs",
 		".eslintrc.json",
 		".eslintrc.yml",
 		".eslintrc.yaml",
-		"eslint.config.mjs",
 	}
 	for _, name in ipairs(configs) do
 		if vim.fn.filereadable(root .. "/" .. name) == 1 then
