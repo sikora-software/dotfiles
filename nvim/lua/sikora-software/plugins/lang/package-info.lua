@@ -1,39 +1,35 @@
-return {
-	-- {
-	-- 	"vuki656/package-info.nvim",
-	-- 	requires = "MunifTanjim/nui.nvim",
-	--
-	-- 	config = function()
-	-- 		require("package-info").setup({
-	-- 			hide_up_to_date = true,
-	-- 			package_manager = "npm",
-	-- 		})
-	--
-	-- 		-- Show dependency versions
-	-- 		vim.keymap.set({ "n" }, "<leader>ns", require("package-info").show, { silent = true, noremap = true })
-	--
-	-- 		-- Hide dependency versions
-	-- 		vim.keymap.set({ "n" }, "<leader>nc", require("package-info").hide, { silent = true, noremap = true })
-	--
-	-- 		-- Toggle dependency versions
-	-- 		vim.keymap.set({ "n" }, "<leader>nt", require("package-info").toggle, { silent = true, noremap = true })
-	--
-	-- 		-- Update dependency on the line
-	-- 		vim.keymap.set({ "n" }, "<leader>nu", require("package-info").update, { silent = true, noremap = true })
-	--
-	-- 		-- Delete dependency on the line
-	-- 		vim.keymap.set({ "n" }, "<leader>nd", require("package-info").delete, { silent = true, noremap = true })
-	--
-	-- 		-- Install a new dependency
-	-- 		vim.keymap.set({ "n" }, "<leader>ni", require("package-info").install, { silent = true, noremap = true })
-	--
-	-- 		-- Install a different dependency version
-	-- 		vim.keymap.set(
-	-- 			{ "n" },
-	-- 			"<leader>np",
-	-- 			require("package-info").change_version,
-	-- 			{ silent = true, noremap = true }
-	-- 		)
-	-- 	end,
-	-- },
-}
+vim.pack.add({
+	"https://github.com/MunifTanjim/nui.nvim",
+	"https://github.com/vuki656/package-info.nvim",
+})
+
+-- require("package-info").setup({
+-- 	hide_up_to_date = true,
+-- 	package_manager = "npm",
+-- })
+
+-- -- Show dependency versions
+-- vim.keymap.set({ "n" }, "<leader>ns", require("package-info").show, { silent = true, noremap = true })
+
+-- -- Hide dependency versions
+-- vim.keymap.set({ "n" }, "<leader>nc", require("package-info").hide, { silent = true, noremap = true })
+
+-- -- Toggle dependency versions
+-- vim.keymap.set({ "n" }, "<leader>nt", require("package-info").toggle, { silent = true, noremap = true })
+
+-- -- Update dependency on the line
+-- vim.keymap.set({ "n" }, "<leader>nu", require("package-info").update, { silent = true, noremap = true })
+
+-- -- Delete dependency on the line
+-- vim.keymap.set({ "n" }, "<leader>nd", require("package-info").delete, { silent = true, noremap = true })
+
+-- -- Install a new dependency
+-- vim.keymap.set({ "n" }, "<leader>ni", require("package-info").install, { silent = true, noremap = true })
+
+-- -- Install a different dependency version
+-- vim.keymap.set(
+-- 	{ "n" },
+-- 	"<leader>np",
+-- 	require("package-info").change_version,
+-- 	{ silent = true, noremap = true }
+-- )

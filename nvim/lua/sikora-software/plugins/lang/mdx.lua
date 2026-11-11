@@ -1,6 +1,1 @@
-return {
-	{
-		"davidmh/mdx.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-	},
-}
+vim.pack.add({ "https://github.com/davidmh/mdx.nvim" })
