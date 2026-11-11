@@ -31,6 +31,12 @@ vim.diagnostic.config({
 		-- header = "",
 		-- prefix = "",
 	},
+	-- [d / ]d (Neovim's default keys) jump to the previous/next diagnostic and show it in popup
+	jump = {
+		on_jump = function(_, bufnr)
+			vim.diagnostic.open_float({ bufnr = bufnr, scope = "cursor", focus = false })
+		end,
+	},
 })
 
 -- Add related information to diagnostics
@@ -68,5 +74,3 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, c
 end
 
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, {})
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, {})
