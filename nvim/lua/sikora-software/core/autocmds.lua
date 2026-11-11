@@ -1,5 +1,8 @@
+local group = vim.api.nvim_create_augroup("sikora-software.core", { clear = true })
+
 -- Quickfix list: <CR> opens the entry, j/k preview entries while staying in the list
 vim.api.nvim_create_autocmd("FileType", {
+	group = group,
 	pattern = "qf",
 	callback = function(args)
 		local bufnr = args.buf
@@ -27,4 +30,4 @@ local function line_number_colors()
 	vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#6e7681" }) -- Below cursor
 end
 line_number_colors()
-vim.api.nvim_create_autocmd("ColorScheme", { callback = line_number_colors })
+vim.api.nvim_create_autocmd("ColorScheme", { group = group, callback = line_number_colors })
