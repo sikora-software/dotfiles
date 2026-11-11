@@ -51,3 +51,35 @@ for _, category in ipairs(categories) do
 		require(("sikora-software.plugins.%s.%s"):format(category, file))
 	end
 end
+
+-- :PackUpdate [names]  download updates and show them for review: ]] / [[ jump between
+--                      plugins, K shows details, :w applies, :q cancels
+vim.api.nvim_create_user_command("PackUpdate", function(cmd)
+	vim.pack.update(#cmd.fargs > 0 and cmd.fargs or nil)
+end, {
+	nargs = "*",
+	complete = function()
+		return vim.tbl_map(function(plugin)
+			return plugin.spec.name
+		end, vim.pack.get(nil, { info = false }))
+	end,
+	desc = "Update plugins (review, then :w to apply or :q to cancel)",
+})
+
+-- :PackClean  delete plugins that are still on disk but no longer added by this config
+vim.api.nvim_create_user_command("PackClean", function()
+	local unused = vim.iter(vim.pack.get(nil, { info = false }))
+		:filter(function(plugin)
+			return not plugin.active
+		end)
+		:map(function(plugin)
+			return plugin.spec.name
+		end)
+		:totable()
+	if #unused == 0 then
+		return vim.notify("PackClean: nothing to delete")
+	end
+	if vim.fn.confirm("Delete from disk?\n\n" .. table.concat(unused, "\n"), "&Yes\n&No", 2) == 1 then
+		vim.pack.del(unused)
+	end
+end, { desc = "Delete plugins that are no longer in the config" })
