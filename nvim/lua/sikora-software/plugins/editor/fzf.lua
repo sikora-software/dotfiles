@@ -40,7 +40,7 @@ fzf.setup({
 	},
 })
 
-vim.cmd("FzfLua register_ui_select")
+fzf.register_ui_select()
 
 -- keymaps
 vim.keymap.set("n", "<leader>ff", fzf.files, {})

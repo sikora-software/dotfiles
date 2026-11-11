@@ -1,7 +1,6 @@
 -- Plugins managed by Neovim's built-in package manager (vim.pack).
 -- Every file in plugins/<category>/ calls vim.pack.add() and then sets its plugin up.
 -- Files load in alphabetical order, category by category, in the order listed here.
--- Categories not listed yet are still imported by lazy.nvim in lazy_init.lua.
 local categories = { "ui", "git", "lang", "lsp", "coding", "editor" }
 
 -- Build steps, run after a plugin is installed or updated.
@@ -40,23 +39,6 @@ vim.api.nvim_create_autocmd("PackChanged", {
 	end,
 })
 
--- TEMPORARY, until lazy.nvim is removed: lazy.nvim turns off Neovim's own loading of
--- plugin/ and after/plugin/ files at startup, so load them right away instead.
-local add = vim.pack.add
-vim.pack.add = function(specs, opts)
-	return add(
-		specs,
-		vim.tbl_extend("keep", opts or {}, {
-			load = function(plugin)
-				vim.cmd.packadd(plugin.spec.name)
-				for _, file in ipairs(vim.fn.glob(plugin.path .. "/after/plugin/**/*.{vim,lua}", false, true)) do
-					vim.cmd.source(file)
-				end
-			end,
-		})
-	)
-end
-
 for _, category in ipairs(categories) do
 	local files = {}
 	for name, kind in vim.fs.dir(vim.fn.stdpath("config") .. "/lua/sikora-software/plugins/" .. category) do
@@ -69,5 +51,3 @@ for _, category in ipairs(categories) do
 		require(("sikora-software.plugins.%s.%s"):format(category, file))
 	end
 end
-
-vim.pack.add = add
