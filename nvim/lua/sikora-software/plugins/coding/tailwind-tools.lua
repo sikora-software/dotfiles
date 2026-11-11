@@ -1,11 +1,6 @@
-return {
-	{
-		"luckasRanarison/tailwind-tools.nvim",
-		name = "tailwind-tools",
-		build = ":UpdateRemotePlugins",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-		opts = {}, -- your configuration
-	},
-}
+-- Needs nvim-treesitter (editor/treesitter.lua) and a build step after install/update:
+-- run the Vim command :UpdateRemotePlugins (pack.lua's `builds` only runs shell commands).
+-- vim.pack.add({
+-- 	{ src = "https://github.com/luckasRanarison/tailwind-tools.nvim", name = "tailwind-tools" },
+-- })
+-- require("tailwind-tools").setup({}) -- your configuration

@@ -1,41 +1,37 @@
-return {
-	"stevearc/conform.nvim",
-	event = { "BufReadPre", "BufNewFile" },
-	config = function()
-		local conform = require("conform")
+vim.pack.add({ "https://github.com/stevearc/conform.nvim" })
 
-		conform.setup({
-			formatters_by_ft = {
-				javascript = { "prettier" },
-				typescript = { "prettier" },
-				javascriptreact = { "prettier" },
-				typescriptreact = { "prettier" },
-				svelte = { "prettier" },
-				css = { "prettier" },
-				scss = { "prettier" },
-				html = { "prettier" },
-				json = { "prettier" },
-				yaml = { "prettier" },
-				markdown = { "prettier" },
-				graphql = { "prettier" },
-				liquid = { "prettier" },
-				lua = { "stylua" },
-				rust = { "rustfmt" },
-				toml = { "taplo" },
-			},
-			-- format_on_save = {
-			-- 	lsp_fallback = true,
-			-- 	async = false,
-			-- 	timeout_ms = 1000,
-			-- },
-		})
+local conform = require("conform")
 
-		vim.keymap.set({ "n", "v" }, "<leader>gf", function()
-			conform.format({
-				lsp_fallback = true,
-				async = false,
-				timeout_ms = 1000,
-			})
-		end, { desc = "Format file or range (in visual mode)" })
-	end,
-}
+conform.setup({
+	formatters_by_ft = {
+		javascript = { "prettier" },
+		typescript = { "prettier" },
+		javascriptreact = { "prettier" },
+		typescriptreact = { "prettier" },
+		svelte = { "prettier" },
+		css = { "prettier" },
+		scss = { "prettier" },
+		html = { "prettier" },
+		json = { "prettier" },
+		yaml = { "prettier" },
+		markdown = { "prettier" },
+		graphql = { "prettier" },
+		liquid = { "prettier" },
+		lua = { "stylua" },
+		rust = { "rustfmt" },
+		toml = { "taplo" },
+	},
+	-- format_on_save = {
+	-- 	lsp_fallback = true,
+	-- 	async = false,
+	-- 	timeout_ms = 1000,
+	-- },
+})
+
+vim.keymap.set({ "n", "v" }, "<leader>gf", function()
+	conform.format({
+		lsp_fallback = true,
+		async = false,
+		timeout_ms = 1000,
+	})
+end, { desc = "Format file or range (in visual mode)" })
