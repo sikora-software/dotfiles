@@ -71,7 +71,7 @@ end, { desc = "Trigger linting for current file" })
 
 vim.keymap.set("n", "<leader>lf", function()
 	local file = vim.fn.expand("%:p")
-	local uv = vim.loop
+	local uv = vim.uv
 
 	-- Get initial file modification time
 	local before = uv.fs_stat(file)
