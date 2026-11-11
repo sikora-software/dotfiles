@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd({
 	"BufWritePost",
 	"InsertLeave",
 	"TextChanged",
-	"TextChangedI",
+	-- "TextChangedI",
 }, {
 	group = lint_augroup,
 	callback = function()
