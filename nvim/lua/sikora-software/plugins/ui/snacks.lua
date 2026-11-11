@@ -1,28 +1,18 @@
--- NOTE: as under lazy.nvim, snacks is only loaded and set up the first time one of
--- its keys below is pressed, so indent/input/notifier/scope/scroll/words stay off
--- until then. Set it up at startup to use them all the time.
-vim.pack.add({ "https://github.com/folke/snacks.nvim" }, { load = function() end })
+vim.pack.add({ "https://github.com/folke/snacks.nvim" })
 
-local function snacks()
-	if not package.loaded["snacks"] then
-		vim.cmd.packadd("snacks.nvim")
-		require("snacks").setup({
-			indent = { enabled = true },
-			input = { enabled = true },
-			notifier = { enabled = true },
-			scope = { enabled = true },
-			scroll = { enabled = true },
-			statuscolumn = { enabled = false }, -- we set this in options.lua
-			-- toggle = { map = LazyVim.safe_keymap_set },
-			words = { enabled = true },
-		})
-	end
-	return Snacks
-end
+require("snacks").setup({
+	indent = { enabled = true, scope = { enabled = false } },
+	input = { enabled = true },
+	notifier = { enabled = true },
+	scope = { enabled = false },
+	scroll = { enabled = false },
+	statuscolumn = { enabled = false }, -- we set this in options.lua
+	-- toggle = { map = LazyVim.safe_keymap_set },
+	words = { enabled = true },
+})
 
 -- stylua: ignore start
 vim.keymap.set("n", "<leader>n", function()
-	snacks()
 	if Snacks.config.picker and Snacks.config.picker.enabled then
 		Snacks.picker.notifications()
 	else
