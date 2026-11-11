@@ -1,10 +1,12 @@
 -- Diagnostics from language servers and nvim-lint
 vim.diagnostic.config({
 	-- update_in_insert = true,
-	virtual_text = {
-		source = true,
-		prefix = "●",
-	},
+	-- Off: tiny-inline-diagnostic shows the messages.
+	-- virtual_text = {
+	-- 	source = true,
+	-- 	prefix = "●",
+	-- },
+	virtual_text = false,
 	signs = {
 		text = {
 			[vim.diagnostic.severity.ERROR] = "",

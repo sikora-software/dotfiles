@@ -28,6 +28,5 @@ vim.api.nvim_create_autocmd("UIEnter", {
 				show_all_diags_on_cursorline = true,
 			},
 		})
-		vim.diagnostic.config({ virtual_text = false }) -- Disable default virtual text
 	end),
 })
