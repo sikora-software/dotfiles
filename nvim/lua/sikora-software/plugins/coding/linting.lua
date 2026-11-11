@@ -81,7 +81,7 @@ vim.keymap.set("n", "<leader>lf", function()
 		stdout = function(_)
 			-- Get mod time after fix
 			local after = uv.fs_stat(file)
-			if before and after and before.mtime.sec ~= after.mtime.sec then
+			if before and after and (before.mtime.sec ~= after.mtime.sec or before.mtime.nsec ~= after.mtime.nsec) then
 				vim.schedule(function()
 					vim.cmd("checktime") -- check if file changed outside
 					vim.cmd("edit!") -- force reload
