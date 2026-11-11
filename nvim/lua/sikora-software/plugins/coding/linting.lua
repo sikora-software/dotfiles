@@ -46,7 +46,7 @@ end
 
 vim.api.nvim_create_autocmd({
 	-- "BufEnter",
-	"BufReadPost",
+	"FileType",
 	"BufWritePost",
 	"InsertLeave",
 	"TextChanged",
