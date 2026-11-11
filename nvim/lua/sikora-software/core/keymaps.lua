@@ -57,7 +57,7 @@ vim.keymap.set("n", "<leader><leader>", function()
 	vim.cmd("source %")
 end)
 
-vim.keymap.set("n", "<leader>rp", function()
+vim.keymap.set("n", "<leader>fp", function()
 	print(vim.fn.expand("%"))
 end, {
 	desc = "Show relative file path",
