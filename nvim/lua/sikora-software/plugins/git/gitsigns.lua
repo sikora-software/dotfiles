@@ -17,7 +17,7 @@ vim.keymap.set("n", "]g", function()
 	end
 	-- schedule to avoid interfering with mapping evaluation / recursion
 	vim.schedule(function()
-		require("gitsigns").next_hunk()
+		require("gitsigns").nav_hunk("next")
 	end)
 	return "<Ignore>"
 end, { expr = true, silent = true })
@@ -27,7 +27,7 @@ vim.keymap.set("n", "[g", function()
 		return "[g"
 	end
 	vim.schedule(function()
-		require("gitsigns").prev_hunk()
+		require("gitsigns").nav_hunk("prev")
 	end)
 	return "<Ignore>"
 end, { expr = true, silent = true })
