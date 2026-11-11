@@ -2,7 +2,7 @@
 -- Every file in plugins/<category>/ calls vim.pack.add() and then sets its plugin up.
 -- Files load in alphabetical order, category by category, in the order listed here.
 -- Categories not listed yet are still imported by lazy.nvim in lazy_init.lua.
-local categories = { "git", "lang" }
+local categories = { "git", "lang", "lsp" }
 
 -- Build steps, run in the plugin's folder after it is installed or updated.
 -- Registered before any vim.pack.add(): on a new machine every plugin from
