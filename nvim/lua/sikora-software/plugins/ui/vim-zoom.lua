@@ -1,5 +1,1 @@
-return {
-	{
-		"dhruvasagar/vim-zoom",
-	},
-}
+vim.pack.add({ "https://github.com/dhruvasagar/vim-zoom" })

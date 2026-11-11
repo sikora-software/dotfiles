@@ -1,8 +1,3 @@
-return {
-	{
-		"j-hui/fidget.nvim",
-		config = function()
-			require("fidget").setup()
-		end,
-	},
-}
+vim.pack.add({ "https://github.com/j-hui/fidget.nvim" })
+
+require("fidget").setup()

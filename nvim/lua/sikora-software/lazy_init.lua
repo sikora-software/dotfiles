@@ -15,11 +15,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	spec = {
-		{ import = "sikora-software.plugins.ui" },
-	},
+	spec = {},
 	change_detection = {
 		notify = false,
 	},
-	performance = { reset_packpath = false }
+	performance = { reset_packpath = false },
 })

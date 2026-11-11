@@ -1,5 +1,2 @@
-return {
-	-- {
-	-- 	"HiPhish/rainbow-delimiters.nvim",
-	-- },
-}
+-- Works without setup
+-- vim.pack.add({ "https://github.com/HiPhish/rainbow-delimiters.nvim" })
