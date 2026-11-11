@@ -1,5 +1,5 @@
 -- Needs nvim-treesitter (editor/treesitter.lua) and a build step after install/update:
--- run the Vim command :UpdateRemotePlugins (pack.lua's `builds` only runs shell commands).
+-- add to `builds` in pack.lua ["tailwind-tools"] = function() vim.cmd("UpdateRemotePlugins") end
 -- vim.pack.add({
 -- 	{ src = "https://github.com/luckasRanarison/tailwind-tools.nvim", name = "tailwind-tools" },
 -- })

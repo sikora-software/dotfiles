@@ -16,7 +16,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	spec = {
-		{ import = "sikora-software.plugins.editor" },
 		{ import = "sikora-software.plugins.ui" },
 	},
 	change_detection = {
