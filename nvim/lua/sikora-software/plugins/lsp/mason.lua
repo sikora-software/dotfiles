@@ -29,6 +29,7 @@ local ensure_installed = {
 	"eslint_d",
 	"prettier",
 	"stylua",
+	"taplo", -- toml
 }
 local registry = require("mason-registry")
 registry.refresh(vim.schedule_wrap(function()
