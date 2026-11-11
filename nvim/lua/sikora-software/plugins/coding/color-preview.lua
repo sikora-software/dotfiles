@@ -5,13 +5,15 @@
 --   -- refer to the configuration section below
 -- })
 
-vim.pack.add({ "https://github.com/norcalli/nvim-colorizer.lua" })
+vim.pack.add({ "https://github.com/catgoose/nvim-colorizer.lua" })
 
 require("colorizer").setup({
 	-- Enable colorizer for certain file types (or use "all" for all files)
-	"*", -- Highlight colors in all files by default
-	css = { rgb_fn = true }, -- Enable parsing rgb(...) functions in CSS
-	html = { names = true }, -- Enable named colors in HTML
+	filetypes = {
+		"*", -- Highlight colors in all files by default
+		css = { rgb_fn = true }, -- Enable parsing rgb(...) functions in CSS
+		html = { names = true }, -- Enable named colors in HTML
+	},
 })
 
 -- vim.pack.add({ "https://github.com/eero-lehtinen/oklch-color-picker.nvim" })
