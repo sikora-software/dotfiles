@@ -38,3 +38,13 @@ if vim.fn.getenv("TERM_PROGRAM") == "ghostty" then
 	vim.opt.title = true
 	vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')}"
 end
+
+-- EditorConfig (built into Neovim): ignore invalid end_of_line values such as `true` silently,
+-- like VS Code does, instead of warning on every file. Valid values (lf, crlf, cr) still apply.
+local editorconfig = require("editorconfig")
+local set_end_of_line = editorconfig.properties.end_of_line
+editorconfig.properties.end_of_line = function(bufnr, val, opts)
+	if val == "lf" or val == "crlf" or val == "cr" then
+		set_end_of_line(bufnr, val, opts)
+	end
+end

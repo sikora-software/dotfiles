@@ -11,6 +11,18 @@ lint.linters_by_ft = {
 	astro = { "eslint_d" },
 }
 
+-- Some ESLint setups print text before eslint_d's JSON result (Nx prints "NX Falling back to
+-- ts-node ..." each time eslint_d starts), which makes parsing fail. Parse from the JSON line on.
+local eslint_d = lint.linters.eslint_d
+local parse_eslint_d = eslint_d.parser
+eslint_d.parser = function(output, bufnr, ...)
+	local json_start = output:find("^%[") or output:find("\n%[")
+	if json_start then
+		output = output:sub(json_start):gsub("^\n", "")
+	end
+	return parse_eslint_d(output, bufnr, ...)
+end
+
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
 local function has_eslint_config()
@@ -30,6 +42,7 @@ local function has_eslint_config()
 		"eslint.config.mts",
 		"eslint.config.cts",
 		-- legacy config
+		".eslintrc",
 		".eslintrc.js",
 		".eslintrc.cjs",
 		".eslintrc.json",
@@ -46,11 +59,11 @@ end
 
 vim.api.nvim_create_autocmd({
 	-- "BufEnter",
-	"FileType",
+	"FileType", -- on open, once the filetype is known (BufReadPost runs before detection)
 	"BufWritePost",
 	"InsertLeave",
 	"TextChanged",
-	-- "TextChangedI",
+	-- "TextChangedI", -- after every keystroke in insert mode; InsertLeave lints when you're done
 }, {
 	group = lint_augroup,
 	callback = function()
@@ -70,35 +83,33 @@ end, { desc = "Trigger linting for current file" })
 -- end, { desc = "Fix ESLint errors with eslint_d", silent = true })
 
 vim.keymap.set("n", "<leader>lf", function()
-	local file = vim.fn.expand("%:p")
-	local uv = vim.uv
+	local bufnr = vim.api.nvim_get_current_buf()
+	-- eslint_d fixes the file on disk, so save unsaved changes first: the fix applies to what you see
+	if vim.bo[bufnr].modified then
+		vim.cmd("silent write")
+	end
+	local file = vim.api.nvim_buf_get_name(bufnr)
+	local before = vim.uv.fs_stat(file)
 
-	-- Get initial file modification time
-	local before = uv.fs_stat(file)
-
-	vim.system({ "eslint_d", "--fix", file }, {
-		text = true,
-		stdout = function(_)
-			-- Get mod time after fix
-			local after = uv.fs_stat(file)
-			if before and after and (before.mtime.sec ~= after.mtime.sec or before.mtime.nsec ~= after.mtime.nsec) then
-				vim.schedule(function()
-					vim.cmd("checktime") -- check if file changed outside
-					vim.cmd("edit!") -- force reload
-					vim.notify("ESLint fixed and buffer reloaded", vim.log.levels.INFO)
+	vim.system({ "eslint_d", "--fix", file }, { text = true }, function(result)
+		-- Runs once, after eslint_d has exited (its output can start with extra lines, e.g. from Nx)
+		vim.schedule(function()
+			if result.code >= 2 then -- 1 only means "problems left that can't be fixed automatically"
+				vim.notify("ESLint error:\n" .. (result.stderr ~= "" and result.stderr or result.stdout), vim.log.levels.ERROR)
+				return
+			end
+			local after = vim.uv.fs_stat(file)
+			-- Compare to the nanosecond: a fix within the same second as the last save must still reload
+			if not (before and after and (before.mtime.sec ~= after.mtime.sec or before.mtime.nsec ~= after.mtime.nsec)) then
+				vim.notify("ESLint: nothing to fix", vim.log.levels.INFO)
+			elseif vim.api.nvim_buf_is_valid(bufnr) and not vim.bo[bufnr].modified then
+				vim.api.nvim_buf_call(bufnr, function()
+					vim.cmd("edit!") -- reload the fixed file
 				end)
+				vim.notify("ESLint fixed and buffer reloaded", vim.log.levels.INFO)
 			else
-				vim.schedule(function()
-					vim.notify("ESLint fixed (no reload needed)", vim.log.levels.INFO)
-				end)
+				vim.notify("ESLint fixed the file, but you edited the buffer meanwhile: :e! shows the fix", vim.log.levels.WARN)
 			end
-		end,
-		stderr = function(err)
-			if err then
-				vim.schedule(function()
-					vim.notify("ESLint error:\n" .. err, vim.log.levels.ERROR)
-				end)
-			end
-		end,
-	})
+		end)
+	end)
 end, { desc = "Fix ESLint errors with eslint_d", silent = true })
