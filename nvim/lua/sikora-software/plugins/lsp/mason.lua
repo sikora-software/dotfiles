@@ -30,6 +30,8 @@ local ensure_installed = {
 	"prettier",
 	"stylua",
 	"taplo", -- toml
+	-- other tools
+	"tree-sitter-cli", -- builds treesitter parsers (needed by nvim-tresitter's main branch)
 }
 local registry = require("mason-registry")
 registry.refresh(vim.schedule_wrap(function()
