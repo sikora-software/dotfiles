@@ -11,7 +11,7 @@ local builds = {
 	["markdown-preview.nvim"] = "cd app && npm install && rm -f package-lock.json && git restore .",
 	-- a function gets the PackChanged event and decides itself
 	["nvim-treesitter"] = function(ev)
-		-- after updates only: on first install, ensure_installed fetches the parsers
+		-- after updates only: on first install, install() in treesitter.lua fetches the parsers
 		if ev.data.kind == "update" then
 			if not ev.data.active then
 				vim.cmd.packadd("nvim-treesitter")
