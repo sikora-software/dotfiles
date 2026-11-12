@@ -37,20 +37,38 @@ local function notify_error(err)
 	vim.notify("roslyn_ls: " .. (err.message or tostring(err)), vim.log.levels.ERROR)
 end
 
+local function is_project_file(name)
+	return name:match("%.slnx?$") ~= nil or name:match("%.csproj$") ~= nil
+end
+
 return {
-	cmd = { "roslyn-language-server", "--stdio", "--autoLoadProjects" },
+	cmd = function(dispatchers, config)
+		local cmd = { "roslyn-language-server", "--stdio" }
+		-- Load the solution/projects only when the root has one; for a loose .cs file the root is
+		-- just its folder, which may contain unrelated projects (e.g. ~/Desktop/Code)
+		for name in vim.fs.dir(config.root_dir) do
+			if is_project_file(name) then
+				table.insert(cmd, "--autoLoadProjects")
+				break
+			end
+		end
+		return vim.lsp.rpc.start(cmd, dispatchers)
+	end,
 	filetypes = { "cs" },
 
-	-- Project root: the folder with the .sln/.slnx, else the one with the .csproj
+	-- Project root: the folder with the .sln/.slnx, else the one with the .csproj, else (a loose
+	-- .cs file, e.g. a .NET 10 file-based app run with `dotnet run Program.cs`) the file's folder
 	root_dir = function(bufnr, on_dir)
-		local root = vim.fs.root(bufnr, function(name)
-			return name:match("%.slnx?$") ~= nil
-		end) or vim.fs.root(bufnr, function(name)
-			return name:match("%.csproj$") ~= nil
-		end)
-		if root then
-			on_dir(root)
+		local name = vim.api.nvim_buf_get_name(bufnr)
+		if name:find("[/\\]MetadataAsSource[/\\]") then
+			return -- decompiled library source opened by go-to-definition: no separate server
 		end
+		local root = vim.fs.root(bufnr, function(file)
+			return file:match("%.slnx?$") ~= nil
+		end) or vim.fs.root(bufnr, function(file)
+			return file:match("%.csproj$") ~= nil
+		end)
+		on_dir(root or vim.fs.dirname(name))
 	end,
 
 	-- Without this Roslyn sends no diagnostics
