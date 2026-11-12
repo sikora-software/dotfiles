@@ -1,6 +1,5 @@
 vim.pack.add({
 	-- "https://github.com/echasnovski/mini.icons",
-	"https://github.com/nvim-tree/nvim-web-devicons",
 	"https://github.com/ibhagwan/fzf-lua",
 })
 
@@ -50,10 +49,18 @@ vim.api.nvim_create_autocmd("UIEnter", {
 })
 
 -- keymaps (fzf-lua is only loaded when one is pressed)
-vim.keymap.set("n", "<leader>ff", function() require("fzf-lua").files() end, {})
-vim.keymap.set("n", "<leader>fg", function() require("fzf-lua").live_grep() end, {})
-vim.keymap.set("n", "<leader>fm", function() require("fzf-lua").marks() end, {})
-vim.keymap.set("n", "<leader>gs", function() require("fzf-lua").git_status() end, {})
+vim.keymap.set("n", "<leader>ff", function()
+	require("fzf-lua").files()
+end, {})
+vim.keymap.set("n", "<leader>fg", function()
+	require("fzf-lua").live_grep()
+end, {})
+vim.keymap.set("n", "<leader>fm", function()
+	require("fzf-lua").marks()
+end, {})
+vim.keymap.set("n", "<leader>gs", function()
+	require("fzf-lua").git_status()
+end, {})
 vim.keymap.set("n", "<leader>gq", function()
 	require("fzf-lua").live_grep({ actions = { ["default"] = require("fzf-lua").actions.file_edit_or_qf } })
 end, { desc = "Live grep into quickfix" })
