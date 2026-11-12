@@ -30,25 +30,33 @@ ts.install({
 	"c_sharp",
 })
 
--- Highlighting and indentation for every filetype that has a parser
+-- Highlighting and indentation for every filetype that has a parser.
+-- Runs one tick after the file is shown: compiling a language's highlight queries takes
+-- ~100 ms the first time per session, so the text appears first and the colours right after.
 local max_filesize = 100 * 1024 -- 100 KB: no highlighting for larger files
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("sikora-software.treesitter", { clear = true }),
 	callback = function(args)
 		local buf = args.buf
-		local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
-		local ok, has_parser = pcall(vim.treesitter.language.add, lang or "")
-		if not (lang and ok and has_parser) then
-			return
-		end
+		vim.schedule(function()
+			if not vim.api.nvim_buf_is_valid(buf) then
+				return
+			end
+			local lang = vim.treesitter.language.get_lang(vim.bo[buf].filetype)
+			local ok, has_parser = pcall(vim.treesitter.language.add, lang or "")
+			if not (lang and ok and has_parser) then
+				return
+			end
 
-		local stat_ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
-		if not (stat_ok and stats and stats.size > max_filesize) then
-			vim.treesitter.start(buf, lang)
-		end
+			local stat_ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+			if not (stat_ok and stats and stats.size > max_filesize) then
+				vim.treesitter.start(buf, lang)
+			end
 
-		if vim.treesitter.query.get(lang, "indents") then
-			vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-		end
+			-- only check that indent rules exist (compiling them here would cost ~10 ms)
+			if #vim.treesitter.query.get_files(lang, "indents") > 0 then
+				vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end
+		end)
 	end,
 })

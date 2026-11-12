@@ -9,68 +9,76 @@ vim.pack.add({
 	-- build = 'nix run .#build-plugin',
 })
 
-require("blink.cmp").setup({
-	-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept, C-n/C-p for up/down)
-	-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys for up/down)
-	-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-	--
-	-- All presets have the following mappings:
-	-- C-space: Open menu or open docs if already open
-	-- C-e: Hide menu
-	-- C-k: Toggle signature help
-	--
-	-- See the full "keymap" documentation for information on defining your own keymap.
-	-- keymap = { preset = "default" },
-	keymap = {
-		preset = "enter",
-		["<C-y>"] = { "select_and_accept" },
-	},
+-- Set up right after startup instead of during it (~8 ms). Not on the first InsertEnter: blink
+-- finishes initialising asynchronously, so the first keystrokes would get no completion.
+-- Its LSP capabilities are still registered at startup by blink's plugin/ file.
+vim.api.nvim_create_autocmd("UIEnter", {
+	once = true,
+	callback = vim.schedule_wrap(function()
+		require("blink.cmp").setup({
+			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept, C-n/C-p for up/down)
+			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys for up/down)
+			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+			--
+			-- All presets have the following mappings:
+			-- C-space: Open menu or open docs if already open
+			-- C-e: Hide menu
+			-- C-k: Toggle signature help
+			--
+			-- See the full "keymap" documentation for information on defining your own keymap.
+			-- keymap = { preset = "default" },
+			keymap = {
+				preset = "enter",
+				["<C-y>"] = { "select_and_accept" },
+			},
 
-	appearance = {
-		-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-		-- Adjusts spacing to ensure icons are aligned
-		nerd_font_variant = "mono",
-	},
+			appearance = {
+				-- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+				-- Adjusts spacing to ensure icons are aligned
+				nerd_font_variant = "mono",
+			},
 
-	completion = {
-		accept = {
-			-- experimental auto-brackets support
-			auto_brackets = {
+			completion = {
+				accept = {
+					-- experimental auto-brackets support
+					auto_brackets = {
+						enabled = true,
+					},
+				},
+				menu = {
+					-- border = "single",
+					draw = {
+						treesitter = { "lsp" },
+					},
+				},
+				documentation = {
+					-- window = {
+					--   border = "single",
+					-- },
+					auto_show = true,
+					auto_show_delay_ms = 200,
+				},
+				ghost_text = {
+					enabled = true,
+				},
+			},
+
+			-- Default list of enabled providers defined so that you can extend it
+			-- elsewhere in your config, without redefining it, due to `opts_extend`
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+
+			-- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
+			-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+			--
+			-- See the fuzzy documentation for more information
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+			signature = {
 				enabled = true,
+				-- window = { border = "single" },
 			},
-		},
-		menu = {
-			-- border = "single",
-			draw = {
-				treesitter = { "lsp" },
-			},
-		},
-		documentation = {
-			-- window = {
-			--   border = "single",
-			-- },
-			auto_show = true,
-			auto_show_delay_ms = 200,
-		},
-		ghost_text = {
-			enabled = true,
-		},
-	},
-
-	-- Default list of enabled providers defined so that you can extend it
-	-- elsewhere in your config, without redefining it, due to `opts_extend`
-	sources = {
-		default = { "lsp", "path", "snippets", "buffer" },
-	},
-
-	-- Blink.cmp uses a Rust fuzzy matcher by default for typo resistance and significantly better performance
-	-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-	-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-	--
-	-- See the fuzzy documentation for more information
-	fuzzy = { implementation = "prefer_rust_with_warning" },
-	signature = {
-		enabled = true,
-		-- window = { border = "single" },
-	},
+		})
+	end),
 })

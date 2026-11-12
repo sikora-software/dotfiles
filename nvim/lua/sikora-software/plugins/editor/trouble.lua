@@ -1,6 +1,13 @@
 vim.pack.add({ "https://github.com/folke/trouble.nvim" })
 
-require("trouble").setup({})
+-- Set up right after startup instead of during it (~4 ms). setup() also creates the :Trouble
+-- command that the keys below use; it exists before you can press anything.
+vim.api.nvim_create_autocmd("UIEnter", {
+	once = true,
+	callback = vim.schedule_wrap(function()
+		require("trouble").setup({})
+	end),
+})
 
 vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Diagnostics (Trouble)" })
 vim.keymap.set(
