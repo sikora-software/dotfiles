@@ -30,6 +30,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
 
 			files = {
 				formatter = "path.filename_first",
+				fzf_opts = { ["--scheme"] = "history", ["--tiebreak"] = "begin,length" },
 			},
 
 			grep = {
