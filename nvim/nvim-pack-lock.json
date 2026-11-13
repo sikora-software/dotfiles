@@ -9,6 +9,10 @@
       "src": "https://github.com/saghen/blink.cmp",
       "version": "1.0.0 - 2.0.0"
     },
+    "codediff.nvim": {
+      "rev": "f92e594f28f25aa2ab631067417e787346c5d5eb",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "conform.nvim": {
       "rev": "016802de402556da54c36bd7359b441266b01cdd",
       "src": "https://github.com/stevearc/conform.nvim"
@@ -35,7 +39,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "ef707fb93301a9b856f36eae4c8f56f5b988a794",
+      "rev": "7c33a797a5c0923e346cbedebe37bdea8f7ea160",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "grug-far.nvim": {
@@ -64,11 +68,11 @@
       "src": "https://github.com/davidmh/mdx.nvim"
     },
     "mini.icons": {
-      "rev": "eab3e692d796d78ea6ffc978d8a380ff26fcf4e3",
+      "rev": "fc90b3925a2a68282be06e28cfe0cbb366c75dad",
       "src": "https://github.com/nvim-mini/mini.icons"
     },
     "mini.indentscope": {
-      "rev": "b26a8ee619c0f4158dd4df1a8151b236b7d100bc",
+      "rev": "cd434e2273750160e81511192f8801d838a506c8",
       "src": "https://github.com/nvim-mini/mini.indentscope"
     },
     "neo-tree.nvim": {
